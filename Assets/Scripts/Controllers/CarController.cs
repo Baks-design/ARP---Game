@@ -1,10 +1,26 @@
 using UnityEngine;
-using Baks.Core.Singletons;
 
 namespace Baks.Core.Controllers
 {
-    public class CarController : Singleton<CarController>
+    public class CarController : MonoBehaviour
     {
+        [SerializeField] 
+        private float m_speed = 1.0f;
+
+        [SerializeField] 
+        private float m_torque = 1.0f;
+
+        [SerializeField] 
+        private float m_minSpeedBeforeTorque = 0.3f;
+
+        [SerializeField] 
+        private float m_minSpeedBeforeIdle = 0.2f;
+
+        [SerializeField] 
+        private Rigidbody m_carRigidBody = default;
+
+        private CarWheel[] _wheels;
+
         public enum Direction
         {
             Idle,
@@ -14,16 +30,9 @@ namespace Baks.Core.Controllers
             TurnRight
         }
 
-        [SerializeField] Rigidbody m_carRigidBody = default;
-        [SerializeField] float m_speed = 1f;
-        [SerializeField] float m_torque = 1f;
-        [SerializeField] float m_minSpeedBeforeTorque = .3f;
-        [SerializeField] float m_minSpeedBeforeIdle = .2f;
-        CarWheel[] _wheels;
+        private void Awake() => _wheels = GetComponentsInChildren<CarWheel>();
 
-        void Awake() => _wheels = GetComponentsInChildren<CarWheel>();
-
-        void Update() 
+        private void Update() 
         {
             if (m_carRigidBody.velocity.magnitude <= m_minSpeedBeforeIdle)
                 AddWheelsSpeed(0f);
@@ -53,12 +62,12 @@ namespace Baks.Core.Controllers
                 m_carRigidBody.AddTorque(transform.up * m_torque);
         }
 
-        void AddWheelsSpeed(float speed)
+        private void AddWheelsSpeed(float speed)
         {
 
         }
 
-        bool CanApplyTorque()
+        private bool CanApplyTorque()
         {
             return true;
         }

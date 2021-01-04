@@ -1,22 +1,32 @@
-using UnityEngine;
 using UnityEngine.InputSystem;
+using Baks.Core.Singletons;
 
 namespace Baks.Core.Controllers
 {
-    public class PlayerInputController : MonoBehaviour
+    public class PlayerInputController : Singleton<PlayerInputController>
     {
-        bool _turnLeft, _turnRight, _reverse, _accelerate;
+        private bool _turnLeft, _turnRight, _reverse, _accelerate;
 
-        void FixedUpdate()
+        private CarController _carController;
+
+        public void Bind(CarController carController)
+        {
+            this._carController = carController;
+        }
+
+        private void FixedUpdate()
         {
             if (_accelerate)
-                CarController.Instance.Accelerate();
+                _carController.Accelerate();
+
             if (_reverse)
-                CarController.Instance.Reverse();
+                _carController.Reverse();
+
             if (_turnLeft)
-                CarController.Instance.TurnLeft();
+                _carController.TurnLeft();
+
             if (_turnRight)
-                CarController.Instance.TurnRight();
+                _carController.TurnRight();
         }
         
         public void OnAccelerate(InputValue inputValue) => _accelerate = inputValue.isPressed;
