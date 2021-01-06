@@ -64,7 +64,6 @@ namespace Baks.Core.Controllers
 
         private void AddWheelsSpeed(float speed)
         {
-
         }
 
         private bool CanApplyTorque()
