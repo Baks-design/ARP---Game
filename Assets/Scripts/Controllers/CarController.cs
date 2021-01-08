@@ -66,9 +66,6 @@ namespace Baks.Core.Controllers
         {
         }
 
-        private bool CanApplyTorque()
-        {
-            return true;
-        }
+        private bool CanApplyTorque() => true;
     }
 }

@@ -22,19 +22,17 @@ namespace Baks.Core.Controllers
         private void Update() 
         {
             var activeTouches = UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches;
-
             if (activeTouches.Count > 0)
             {
                 var touch = activeTouches[0];
                 bool isOverUI = touch.screenPosition.IsPointOverUIObject();
-
-                if (isOverUI) return;
+                if (isOverUI) 
+                    return;
 
                 if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began)
                 {
                     var ray = m_arCamera.ScreenPointToRay(touch.screenPosition);
                     var hasHit = Physics.Raycast(ray, out var hit, float.PositiveInfinity, m_layerToInclude);
-                    
                     if (hasHit && _carController == null)
                     {
                         _carController = Instantiate(m_prefab, hit.point, Quaternion.identity);

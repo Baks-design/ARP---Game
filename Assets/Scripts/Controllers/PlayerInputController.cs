@@ -5,8 +5,10 @@ namespace Baks.Core.Controllers
 {
     public class PlayerInputController : Singleton<PlayerInputController>
     {
-        private bool _turnLeft, _turnRight, _reverse, _accelerate;
-
+        private bool _turnLeft;
+        private bool _turnRight;
+        private bool _reverse;
+        private bool _accelerate;
         private CarController _carController;
 
         public void Bind(CarController carController)
